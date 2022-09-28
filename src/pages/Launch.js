@@ -32,7 +32,7 @@ const ExpandableComponent = ({item, onClickFunction}) => {
       setLayoutHeight(0);
     }
   }, [item.isExpanded]);
-  
+
   return (
     <View style={{marginTop: 5}}>
       {/*Header of the Expandable List Item*/}
@@ -142,13 +142,12 @@ const ExpandableComponent = ({item, onClickFunction}) => {
 };
 
 const Launch = () => {
-
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
 
   console.log('masterDataSource', masterDataSource);
-
+  console.log('filteredDataSource', filteredDataSource);
   const CONTENT = [
     {
       isExpanded: false,
@@ -171,7 +170,7 @@ const Launch = () => {
         {id: 5, val: 'Halibut'},
         {id: 6, val: 'Lobster'},
         {id: 7, val: 'Mahi Mahi'},
-        {id: 8, val: 'Monkfish'}
+        {id: 8, val: 'Monkfish'},
       ],
     },
     {
@@ -212,29 +211,25 @@ const Launch = () => {
       ],
     },
   ];
-  
 
-  
   React.useEffect(() => {
-        setFilteredDataSource(CONTENT);
-        setMasterDataSource(CONTENT);
-      },[])
+    setFilteredDataSource(CONTENT);
+    setMasterDataSource(CONTENT);
+  }, []);
 
-  const searchFilterFunction = (text) => {
-    console.log("text",text);
+  const searchFilterFunction = text => {
+    console.log('text', text);
     // Check if searched text is not blank
     if (text) {
-      
-      console.log("masterDataSourcesds",masterDataSource);
+      console.log('masterDataSourcesds', masterDataSource);
 
-      const newData = masterDataSource.filter(
-        function (item) {
-         console.log("itemdsdf",item);
-          const itemData = item.category_name
-            ? item.category_name.toUpperCase()
-            : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
+      const newData = masterDataSource.filter(function (item) {
+        console.log('itemdsdf', item);
+        const itemData = item.category_name
+          ? item.category_name.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
       });
       setFilteredDataSource(newData);
       setSearch(text);
@@ -247,13 +242,11 @@ const Launch = () => {
   };
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [textInputValue, setTextInputValue] = React.useState('');  
+  const [textInputValue, setTextInputValue] = React.useState('');
   const [listDataSource, setListDataSource] = useState(CONTENT);
   const [multiSelect, setMultiSelect] = useState(false);
 
   console.log('listDataSource', listDataSource[0]?.subcategory_name);
-
-  
 
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -323,7 +316,7 @@ const Launch = () => {
             </View>
 
             <ScrollView>
-              {listDataSource.map((item, key) => (
+              {filteredDataSource?.map((item, key) => (
                 <ExpandableComponent
                   key={item.category_name}
                   onClickFunction={() => {
