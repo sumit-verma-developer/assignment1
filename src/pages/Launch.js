@@ -56,9 +56,9 @@ const ExpandableComponent = ({item, onClickFunction}) => {
             <View
               style={{
                 flexDirection: 'row',
-                width: '90%',
-                height: '100%',
-                alignItems: 'center',
+                // width: '90%',
+                // height: '100%',
+                // alignItems: 'center',
               }}>
               <View
                 style={{
