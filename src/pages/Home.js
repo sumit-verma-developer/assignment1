@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -12,7 +12,7 @@ import { List, Divider } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchusers } from "../store/actions/userAction";
-import { user } from "../store/slices/user/user.slice";
+import { user } from "../store/slices/user.slice";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -21,25 +21,26 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
-  const perPage = 5; // Number of items to fetch per page
   
+
+console.log("page",page,"totalPages",totalPages);
 
   useEffect(() => {
     loadUsers();
-  }, [page]);
+  }, []);
+  
 
   const loadUsers = async () => {
-  
-    try {
-      payload = {
-        page: page,
-        perpage: perPage,
-      };
-     
-      if (page > totalPages) return ; // Stop loading if all pages have been fetched
+    payload = {
+      page: page,
+      perpage: 5,
+    };
+    try { 
+       if (page > totalPages) return ; // Stop loading if all pages have been fetched
+       setLoading(true)
       await dispatch(fetchusers(payload));
-      const { data, total_pages } = users;
-      setTotalPages(total_pages);
+      const total_Page=users?.total_pages==undefined  && users?.total_pages==null?1:users?.total_pages;
+      setTotalPages(total_Page);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -71,20 +72,16 @@ const Home = () => {
   };
 
   const handleLoadMore = () => {
-    // if (page < totalPages) {
-    //   setPage((prevPage) => prevPage + 1);
-    // loadUsers();
-    // }
     if (!loading) {
       setPage((prevPage) => prevPage + 1);
       loadUsers();
     }
+  
   };
 
 
   const renderFooter = () => {
-    if (page === totalPages) return null;
-    // if (!loading) return null;
+    if (!loading) return null;
 
     return (
       <View style={{ paddingVertical: 20 }}>
@@ -141,5 +138,6 @@ const styles = StyleSheet.create({
   },
   email: {
     paddingTop: 10,
+    color: 'gray',
   },
 });

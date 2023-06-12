@@ -1,11 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {fetchusers} from '../../actions/userAction';
-import {ThunkStatusEnum} from '../../../../assets/constants/thunkStatus.enum';
+import {fetchusers} from '../actions/userAction';
+import {ThunkStatusEnum} from '../../../assets/constants/thunkStatus.enum';
 import {
   defaultThunkFailureState,
   defaultThunkLoadingState,
   defaultThunkSuccessState,
-} from '../../../../assets/constants/thunk.config';
+} from '../../../assets/constants/thunk.config';
 // TODO: Should we have api based status and errors for more fine grained control
 
 const initialThunkState = {status: ThunkStatusEnum.IDLE, error: null};
@@ -14,6 +14,7 @@ const initialThunkState = {status: ThunkStatusEnum.IDLE, error: null};
 const initialState = {
   user: {},
   updateFeeStatus: initialThunkState,
+  
 };
 
 // TODO: Remove boilerplate?
