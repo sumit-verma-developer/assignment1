@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import {CardStyleInterpolators} from '@react-navigation/stack';
-import Launch from '../pages/Launch';
+import Details from '../pages/Details';
+import Home from '../pages/Home';
 
 const Stack = createStackNavigator();
 
@@ -14,7 +15,8 @@ export default function StackNavigator() {
       }}>
 
 
-   <Stack.Screen name="lunch" component={Launch} />
+    <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Details" component={Details} />
     </Stack.Navigator>
   );
 }
